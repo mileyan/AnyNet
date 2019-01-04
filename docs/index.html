@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Anytime Stereo Image Depth Estimation on Mobile Devices</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Loading Bootstrap -->
+	<link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="css/site.css">
+	<link rel="shortcut icon" href="img/favicon.ico">
+
+	<style type="text/css">
+	.video-responsive{
+		overflow:hidden;
+		padding-bottom:56.25%;
+		position:relative;
+		height:0;
+	}
+	.video-responsive iframe{
+		left:0;
+		top:0;
+		height:100%;
+		width:100%;
+		position:absolute;
+	}
+	</style>
+
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/vendor/html5shiv.js"></script>
+      <script src="js/vendor/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+	<div class="container">
+		<div class="">
+			<h3 class="text-center">Anytime Stereo Image Depth Estimation on Mobile Devices</h3>
+			<p class="text-center">Yan Wang<sup>*1</sup>, Zihang Lai<sup>*2</sup>, Gao Huang<sup>1</sup>, Brian H. Wang<sup>1</sup>, <br> Laurens van der Maaten<sup>3</sup>, Mark Campbell<sup>1</sup>, and Kilian Q. Weinberger<sup>1</sup></p>
+			<br>
+			<p class="text-center"><sup>1</sup>Cornell University <sup>2</sup>University of Oxford <sup>3</sup>Facebook AI Research</p>
+			<p class="text-right small" style="color: gray">* indicates equal contributions</p>
+
+		</div>
+
+		<div class="container">
+			<div class="row">
+
+				<div class="col-xs-offset-2 col-xs-8 col-sm-offset-1 col-sm-5 col-md-offset-2 col-md-4">
+					<img class="img-responsive" src="img/imgL.gif">
+				</div>
+				<div class="col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-5 col-md-4">
+					<img class="img-responsive" src="img/imgL.gif">
+				</div>
+			</div>
+			<p class="text-center">Input stereo images</p>
+
+			<div class="row">
+				<div class="col-xs-offset-2 col-xs-8 col-sm-offset-1 col-sm-5 col-md-offset-2 col-md-4">
+					<img class="img-responsive" src="img/anynet.gif">
+					<p class="text-center">AnyNet prediction (35 FPS)</p>
+
+				</div>
+				<div class="col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-5 col-md-4">
+					<img class="img-responsive" src="img/stereonet.gif">
+					<p class="text-center">StereoNet prediction (3 FPS)</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-10 col-md-offset-1">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Video</div>
+
+				<div class="panel-body">
+					<div class="text-center video-responsive">
+						<iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/l6cX1Wf4mVs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><br>
+						
+
+					</div>
+					<div class="text-right">
+						<a href="video/video.mp4">Download video</a> 
+					</div>
+				</div>
+			</div>
+
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Abstract</div>
+
+				<div class="panel-body">
+					<p class="small">Many real-world applications of stereo depth estimation in robotics require the generation of disparity maps in real time on low power devices. Depth estimation should be accurate, e.g. for mapping the environment, and real-time, e.g. for obstacle avoidance. Current state-of-the-art algorithms can either generate accurate but slow, or fast but high-error mappings, and typically have far too many parameters for low-power/memory devices. Motivated by this shortcoming we propose a novel approach for disparity prediction in the anytime setting. In contrast to prior work, our end-to-end learned approach can trade off computation and accuracy at inference time. The depth estimation is performed in stages, during which the model can be queried at any time to output its current best estimate. In the first stage it processes a scaled down version of the input images to obtain an initial low resolution sketch of the disparity map. This sketch is then successively refined with higher resolution details until a full resolution, high quality disparity map emerges. Here, we leverage the fact that disparity refinements can be performed extremely fast as the residual error is bounded by only a few pixels. Our final model can process 1242×375 resolution images within a range of 10-35 FPS on an NVIDIA Jetson TX2 module with only marginal increases in error – using two orders of magnitude fewer parameters than the most competitive baseline.
+					</p>
+					<pre>@article{wang2018anytime,
+  title={Anytime Stereo Image Depth Estimation on Mobile Devices},
+  author={Wang, Yan and Lai, Zihang and Huang, Gao and Wang, Brian H and van der Maaten, Laurens and Campbell, Mark and Weinberger, Kilian Q},
+  journal={arXiv preprint arXiv:1810.11408},
+  year={2018}
+}</pre>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Network Struture</div>
+
+				<div class="panel-body">
+					<img class="img-responsive" src="img/warp.png">
+					<br>
+					<p class="text-center">As time progresses the depth estimation becomes increasingly accurate. The algorithm can be polled at any time to return the current best estimate of the depth map.</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Downloads</div>
+
+				<div class="panel-body">
+					<ul>
+						<li><b>Paper: </b> arxiv</li>
+						<li><b>Code release: </b> github page</li>
+						<li><b>Pretrained model: </b> github page</li>
+						<li><b>Dataset: </b> 
+							<a href="http://www.cvlibs.net/datasets/kitti/eval_scene_flow.php?benchmark=stereo">KITTI</a>, 
+							<a href="https://lmb.informatik.uni-freiburg.de/resources/datasets/SceneFlowDatasets.en.html#downloads">Scene Flow</a>
+						</li>
+					</ul>
+					Please contact yw763 at cornell.edu or zihang.lai at cs.ox.ac.uk if you have any questions.
+				</div>
+			</div>		
+			<div class="panel panel-default">
+				<div class="panel-heading">Results</div>
+
+				<div class="panel-body">
+					<img class="img-responsive" src="img/results.png">
+				</div>
+			</div>
+		</div>
+
+		<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+		<script src="js/vendor/jquery.min.js"></script>
+	</body>
+	</html>

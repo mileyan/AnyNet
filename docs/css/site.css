@@ -1,0 +1,36 @@
+/* Site-wide Config */
+
+html{ height:100%; }
+
+body{ 
+	min-height:100%;
+	margin:0;
+	padding:0;
+	position:relative;
+	padding-bottom:132px;
+}
+
+
+footer{
+	padding-top: 32px;
+	position:absolute;
+	bottom:0;width:100%;
+	margin-top: 32px;
+	height:100px;
+}
+
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+/* Index page config */
+.navbar-img {
+	max-width:40px; margin: -7px 7px 7px -7px;
+}
+
+.cn_footer {
+	background-image: url(../img/footer_background.jpg);
+	background-repeat: repeat-x;
+	color: #2C3E50;
+}
