@@ -44,7 +44,7 @@ Many real-world applications of stereo depth es- timation in robotics require th
 
 - [Python3.5](https://www.python.org/downloads/)
 - [PyTorch(0.4.0)](http://pytorch.org)
-- CUDA 8.0/9.0
+- CUDA 8.0
 - [KITTI Stereo](http://www.cvlibs.net/datasets/kitti/eval_stereo.php)
 - [Scene Flow](https://lmb.informatik.uni-freiburg.de/resources/datasets/SceneFlowDatasets.en.html)
 
