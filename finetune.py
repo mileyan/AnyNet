@@ -9,6 +9,7 @@ import torch.nn.functional as F
 import time
 from dataloader import KITTILoader as DA
 import utils.logger as logger
+import torch.backends.cudnn as cudnn
 
 import models.anynet
 
@@ -102,7 +103,7 @@ def main():
             log.info("=> Will start from scratch.")
     else:
         log.info('Not Resume')
-
+    cudnn.benchmark = True
     start_full_time = time.time()
     for epoch in range(args.start_epoch, args.epochs):
         log.info('This is {}-th epoch'.format(epoch))
