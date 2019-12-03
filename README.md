@@ -63,6 +63,36 @@ Secondly, we use the following command to finetune AnyNet on KITTI 2015
 python finetune.py --maxdisp 192 --with_spn --datapath path-to-kitti2015/training/
 ```
 
+### Pretrained Models
+You can download the pretrained model from [https://drive.google.com/file/d/18Vi68rQO-vcBn3882vkumIWtGggZQDoU/view?usp=sharing](https://drive.google.com/file/d/18Vi68rQO-vcBn3882vkumIWtGggZQDoU/view?usp=sharing).
+It includes the SceneFlow, KITTI2012, KITTI2015 pretrained models. We also put the split files in the folder.
+
+To evaluate the model on KITTI2012 
+```
+python finetune.py --maxdisp 192 --with_spn --datapath path-to-kitti2012/training/ \
+   --save_path results/kitti2012 --datatype 2012 --pretrained checkpoint/kitti2012_ck/checkpoint.tar \
+   --split_file checkpoint/kitti2012_ck/split.txt --evaluate
+```
+To evaluate the model on KITTI2015 
+```
+python finetune.py --maxdisp 192 --with_spn --datapath path-to-kitti2015/training/ \
+    --save_path results/kitti2015 --datatype 2015 --pretrained checkpoint/kitti2015_ck/checkpoint.tar \
+    --split_file checkpoint/kitti2015_ck/split.txt --evaluate
+```
+To fine-tune the ScenFlow pretrained model on KITTI2015 
+```
+python finetune.py --maxdisp 192 --with_spn --datapath path-to-kitti2015/training/ \
+    --pretrained checkpoint/scenflow/sceneflow.tar
+```
+To fine-tune the ScenFlow pretrained model on KITTI2012 
+```
+python finetune.py --maxdisp 192 --with_spn --datapath path-to-kitti2012/training/ \
+    --pretrained checkpoint/scenflow/sceneflow.tar --datatype 2012
+```
+Note:  All results reported in the paper are averaged over five randomized 80/20 train/validation splits.
+ 
+
+
 
 
 ## Results

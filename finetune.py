@@ -45,6 +45,8 @@ parser.add_argument('--spn_init_channels', type=int, default=8, help='initial ch
 parser.add_argument('--start_epoch_for_spn', type=int, default=121)
 parser.add_argument('--pretrained', type=str, default='results/pretrained_anynet/checkpoint.tar',
                     help='pretrained model path')
+parser.add_argument('--split_file', type=str, default=None)
+parser.add_argument('--evaluate', action='store_true')
 
 
 args = parser.parse_args()
@@ -60,7 +62,7 @@ def main():
     log = logger.setup_logger(args.save_path + '/training.log')
 
     train_left_img, train_right_img, train_left_disp, test_left_img, test_right_img, test_left_disp = ls.dataloader(
-        args.datapath,log)
+        args.datapath,log, args.split_file)
 
     TrainImgLoader = torch.utils.data.DataLoader(
         DA.myImageFloder(train_left_img, train_right_img, train_left_disp, True),
@@ -105,6 +107,10 @@ def main():
         log.info('Not Resume')
     cudnn.benchmark = True
     start_full_time = time.time()
+    if args.evaluate:
+        test(TestImgLoader, model, log)
+        return
+
     for epoch in range(args.start_epoch, args.epochs):
         log.info('This is {}-th epoch'.format(epoch))
         adjust_learning_rate(optimizer, epoch)
