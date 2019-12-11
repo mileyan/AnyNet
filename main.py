@@ -117,6 +117,8 @@ def train(dataloader, model, optimizer, log, epoch=0):
 
         optimizer.zero_grad()
         mask = disp_L < args.maxdisp
+        if mask.float().sum() == 0:
+            continue
         mask.detach_()
         outputs = model(imgL, imgR)
         outputs = [torch.squeeze(output, 1) for output in outputs]
