@@ -55,6 +55,8 @@ if args.datatype == '2015':
     from dataloader import KITTIloader2015 as ls
 elif args.datatype == '2012':
     from dataloader import KITTIloader2012 as ls
+elif args.datatype == 'other':
+    from dataloader import diy_dataset as ls
 
 
 def main():

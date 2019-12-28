@@ -33,12 +33,13 @@ def dataloader(filepath, log, split_file):
         train = [x for x in image if x not in val]
     log.info(val)
 
-    left_train = [filepath + left_fold + img for img in train]
-    right_train = [filepath + right_fold + img for img in train]
-    disp_train = [filepath + disp_noc + img for img in train]
 
-    left_val = [filepath + left_fold + img for img in val]
-    right_val = [filepath + right_fold + img for img in val]
-    disp_val = [filepath + disp_noc + img for img in val]
+    left_train = [os.path.join(filepath, left_fold, img) for img in train]
+    right_train = [os.path.join(filepath, right_fold, img) for img in train]
+    disp_train = [os.path.join(filepath, disp_noc, img) for img in train]
+
+    left_val = [os.path.join(filepath, left_fold, img) for img in val]
+    right_val = [os.path.join(filepath, right_fold, img) for img in val]
+    disp_val = [os.path.join(filepath, disp_noc, img) for img in val]
 
     return left_train, right_train, disp_train, left_val, right_val, disp_val

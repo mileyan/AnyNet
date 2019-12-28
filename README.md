@@ -98,6 +98,25 @@ python finetune.py --maxdisp 192 --with_spn --datapath path-to-kitti2012/trainin
 ```
 Note:  All results reported in the paper are averaged over five randomized 80/20 train/validation splits.
  
+### finetune on your own dataset
+You have to organize your own dataset as the following format
+```angular2
+path-to-your-dataset/
+    | training
+        | image_2/           #left images
+        | image_3/           #right images
+        | disp_occ_0/        #left disparities
+    | validation
+        | image_2/           #left images
+        | image_3/           #right images
+        | disp_occ_0/        #left disparities
+```
+The disparity ground truth has to be stored as png format and multiplied by 256.
+The finetune command is 
+```angular2
+python finetune.py --maxdisp 192 --with_spn --datapath path-to-your-dataset/ \
+    --pretrained checkpoint/scenflow/sceneflow.tar --datatype other
+```
 
 
 
