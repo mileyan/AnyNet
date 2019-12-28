@@ -1,0 +1,2 @@
+int gaterecurrent2dnoind_forward_cuda(int horizontal_, int reverse_, torch::Tensor X, torch::Tensor G1, torch::Tensor G2, torch::Tensor G3, torch::Tensor output);
+int gaterecurrent2dnoind_backward_cuda(int horizontal_, int reverse_, torch::Tensor top, torch::Tensor top_grad, torch::Tensor X, torch::Tensor G1, torch::Tensor G2, torch::Tensor G3, torch::Tensor X_diff, torch::Tensor G1_diff, torch::Tensor G2_diff, torch::Tensor G3_diff);

@@ -44,11 +44,18 @@ Many real-world applications of stereo depth es- timation in robotics require th
     ```
 ### Dependencies
 
-- [Python3.5](https://www.python.org/downloads/)
-- [PyTorch(0.4.0)](http://pytorch.org)
-- CUDA 8.0
+- [Python3.6](https://www.python.org/downloads/)
+- [~~PyTorch(0.4.0)~~ Pytorch(1.0)](http://pytorch.org)
+- ~~CUDA 8.0~~ CUDA 10.0
 - [KITTI Stereo](http://www.cvlibs.net/datasets/kitti/eval_stereo.php)
 - [Scene Flow](https://lmb.informatik.uni-freiburg.de/resources/datasets/SceneFlowDatasets.en.html)
+### Update:
+Now our code supports Pytorch 1.0! 
+You have to recompile the spn module
+```angular2
+cd models/spn_t1
+bash make.sh
+```
 
 ### Train
 Firstly, we use the following command to pretrained AnyNet on Scene Flow

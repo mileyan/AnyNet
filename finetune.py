@@ -85,7 +85,7 @@ def main():
     if args.pretrained:
         if os.path.isfile(args.pretrained):
             checkpoint = torch.load(args.pretrained)
-            model.load_state_dict(checkpoint['state_dict'])
+            model.load_state_dict(checkpoint['state_dict'], strict=False)
             log.info("=> loaded pretrained model '{}'"
                      .format(args.pretrained))
         else:

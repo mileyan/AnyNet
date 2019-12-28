@@ -24,7 +24,8 @@ class AnyNet(nn.Module):
 
         if self.with_spn:
             try:
-                from .spn.modules.gaterecurrent2dnoind import GateRecurrent2dnoind
+                # from .spn.modules.gaterecurrent2dnoind import GateRecurrent2dnoind
+                from .spn_t1.modules.gaterecurrent2dnoind import GateRecurrent2dnoind
             except:
                 print('Cannot load spn model')
                 sys.exit()
@@ -114,7 +115,7 @@ class AnyNet(nn.Module):
         size = feat_l.size()
         batch_disp = disp[:,None,:,:,:].repeat(1, maxdisp*2-1, 1, 1, 1).view(-1,1,size[-2], size[-1])
         batch_shift = torch.arange(-maxdisp+1, maxdisp, device='cuda').repeat(size[0])[:,None,None,None] * stride
-        batch_disp = batch_disp - batch_shift
+        batch_disp = batch_disp - batch_shift.float()
         batch_feat_l = feat_l[:,None,:,:,:].repeat(1,maxdisp*2-1, 1, 1, 1).view(-1,size[-3],size[-2], size[-1])
         batch_feat_r = feat_r[:,None,:,:,:].repeat(1,maxdisp*2-1, 1, 1, 1).view(-1,size[-3],size[-2], size[-1])
         cost = torch.norm(batch_feat_l - self.warp(batch_feat_r, batch_disp), 1, 1)
@@ -172,7 +173,7 @@ class AnyNet(nn.Module):
 class disparityregression2(nn.Module):
     def __init__(self, start, end, stride=1):
         super(disparityregression2, self).__init__()
-        self.disp = torch.arange(start*stride, end*stride, stride, device='cuda', requires_grad=False).view(1, -1, 1, 1)
+        self.disp = torch.arange(start*stride, end*stride, stride, device='cuda', requires_grad=False).view(1, -1, 1, 1).float()
 
     def forward(self, x):
         disp = self.disp.repeat(x.size()[0], 1, x.size()[2], x.size()[3])
