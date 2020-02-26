@@ -89,12 +89,12 @@ python finetune.py --maxdisp 192 --with_spn --datapath path-to-kitti2015/trainin
 To fine-tune the ScenFlow pretrained model on KITTI2015 
 ```
 python finetune.py --maxdisp 192 --with_spn --datapath path-to-kitti2015/training/ \
-    --pretrained checkpoint/scenflow/sceneflow.tar
+    --pretrained checkpoint/sceneflow/sceneflow.tar
 ```
 To fine-tune the ScenFlow pretrained model on KITTI2012 
 ```
 python finetune.py --maxdisp 192 --with_spn --datapath path-to-kitti2012/training/ \
-    --pretrained checkpoint/scenflow/sceneflow.tar --datatype 2012
+    --pretrained checkpoint/sceneflow/sceneflow.tar --datatype 2012
 ```
 Note:  All results reported in the paper are averaged over five randomized 80/20 train/validation splits.
  
