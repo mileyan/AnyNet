@@ -15,6 +15,6 @@ ln -s $monkaa_frames_cleanpass dataset/monkaa_frames_cleanpass
 ln -s $monkaa_disparity dataset/monkaa_disparity
 ln -s $flyingthings3d_frames_cleanpass dataset/frames_cleanpass
 ln -s $flyingthings3d_disparity dataset/frames_disparity
-ln -s $driving_frames_cleanpass dataset/driving_disparity
-ln -s $driving_disparity dataset/driving_frames_cleanpass
+ln -s $driving_frames_cleanpass dataset/driving_disparitydriving_frames_cleanpass
+ln -s $driving_disparity dataset/driving_disparity
 
