@@ -1,5 +1,8 @@
 import argparse
 import os
+import cv2 as cv
+cv.namedWindow("3d", cv.WINDOW_NORMAL)
+
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -7,11 +10,14 @@ import torch.optim as optim
 import torch.utils.data
 import torch.nn.functional as F
 import time
+import numpy as np
 from dataloader import KITTILoader as DA
 import utils.logger as logger
 import torch.backends.cudnn as cudnn
 
 import models.anynet
+
+
 
 parser = argparse.ArgumentParser(description='Anynet fintune on KITTI')
 parser.add_argument('--maxdisp', type=int, default=192,
@@ -82,6 +88,7 @@ def main():
     model = models.anynet.AnyNet(args)
     model = nn.DataParallel(model).cuda()
     optimizer = optim.Adam(model.parameters(), lr=args.lr, betas=(0.9, 0.999))
+
     log.info('Number of model parameters: {}'.format(sum([p.data.nelement() for p in model.parameters()])))
 
     if args.pretrained:
@@ -194,16 +201,38 @@ def test(dataloader, model, log):
         with torch.no_grad():
             outputs = model(imgL, imgR)
             for x in range(stages):
-                output = torch.squeeze(outputs[x], 1)
-                D1s[x].update(error_estimating(output, disp_L).item())
+                #print((outputs[x]))
+                array = outputs[x].cpu().detach().numpy()
+                #print(array)
+                print(array.shape)
+                for i in range(8):
+                    array_2d = array[i][0]
+                    #print(array_2d.shape)
+                    zmin = np.amin(array_2d)
+                    zmax = np.amax(array_2d)
 
-        info_str = '\t'.join(['Stage {} = {:.4f}({:.4f})'.format(x, D1s[x].val, D1s[x].avg) for x in range(stages)])
+                    #print(zmax,  zmin)
 
-        log.info('[{}/{}] {}'.format(
-            batch_idx, length_loader, info_str))
+                    z_normalized = ((array_2d + zmin)* 255 // (zmin + zmax)).astype(np.uint8)
+                    print(z_normalized)
+                    z_colormapped = cv.applyColorMap(z_normalized, cv.COLORMAP_JET)
+                    filename = "output/" + str(x) + "_" + str(i) + ".jpg"
+                    cv.imwrite(filename, z_colormapped)
+                   # cv.imshow("3d", z_normalized)
+                   # cv.waitKey(10)
 
-    info_str = ', '.join(['Stage {}={:.4f}'.format(x, D1s[x].avg) for x in range(stages)])
-    log.info('Average test 3-Pixel Error = ' + info_str)
+               # output = torch.squ )
+               # arr = output.cpu().detach().numpy()
+               # cv.imshow("3d", arr)
+               # D1s[x].update(error_estimating(output, disp_L).item())
+
+       # info_str = '\t'.join(['Stage {} = {:.4f}({:.4f})'.format(x, D1s[x].val, D1s[x].avg) for x in range(stages)])
+
+        #log.info('[{}/{}] {}'.format(
+        #    batch_idx, length_loader, info_str))
+
+    #info_str = ', '.join(['Stage {}={:.4f}'.format(x, D1s[x].avg) for x in range(stages)])
+    #log.info('Average test 3-Pixel Error = ' + info_str)
 
 
 def error_estimating(disp, ground_truth, maxdisp=192):
