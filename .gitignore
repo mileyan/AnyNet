@@ -1,0 +1,7 @@
+checkpoint*
+*.swp
+*.so
+dataloader/*
+*__pycache__*
+output*
+results
